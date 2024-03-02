@@ -22,7 +22,6 @@ const Home = () => {
 			getTasks()
 		}
 	}
-	// createUser()
 
 
 
@@ -42,10 +41,8 @@ const Home = () => {
 			console.log(error);
 		}
 	}
-	// getTasks()
 
 	const handleSubmit = async (evt) => {
-
 
 		if (evt.key == "Enter") {
 			const response = await fetch('https://playground.4geeks.com/apis/fake/todos/user/Jean-abiad', {
@@ -56,12 +53,41 @@ const Home = () => {
 				}
 			})
 
+
 			if (response.ok) {
-				// getTasks()
+				getTasks()
 
 			}
 		}
+
 	};
+
+	const deleteAll = async () => {
+		const response = await fetch('https://playground.4geeks.com/apis/fake/todos/user/Jean-abiad', {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' }
+		});
+
+		createUser()
+	};
+
+	const deleteItems = async (label) => {
+		const taskFiltered = list.filter(item => item.label != label)
+
+		const response = await fetch('https://playground.4geeks.com/apis/fake/todos/user/Jean-abiad', {
+			method: 'PUT',
+			body: JSON.stringify(taskFiltered),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		if (response.ok) {
+			setList(taskFiltered)
+
+		} console.log(taskFiltered);
+	};
+
+
 
 
 	useEffect(() => {
@@ -72,20 +98,32 @@ const Home = () => {
 
 
 	return <>
-		<form onSubmit={(evt) => { evt.preventDefault() }}>
 
-			<input placeholder="Write a Task" className="m-3" type="text"
-				onKeyUp={handleSubmit}
-				onChange={(e) => setTask(e.target.value)}
-			/>
-		</form>
+		<div className="caja" style={{ width: "55%", margin: "auto" }}>
+			<form className="d-flex justify-content-center mt-2" onSubmit={(evt) => { evt.preventDefault() }}>
 
-		{list && list.map((task, index) => <div className="d-flex gap-2 m-3" key={index}>
-			<h2>- {task.label} -</h2>
-			<button className="btn btn-danger">Delete</button>
+				<input placeholder="Write a Task" className="border border-0 caja py-3 px-3" type="text"
+					onKeyUp={handleSubmit}
+					onChange={(e) => setTask(e.target.value)}
+				/>
+				<button
+					onClick={() => deleteAll()}
+					className="btn btn-secondary mx-3">Delete All</button>
+
+			</form>
+
+			{list && list.map((task, index) => <div className="d-flex justify-content-between border-top gap-2 m-3" key={index}>
+				<div className="d-flex mt-4 align-content-center">
+					<h5 className=""> {task.label} </h5></div>
+				<button className="bg-danger btn d-flex align-items-center m-3 anm borde" onClick={() => deleteItems(task.label)}>🗑️</button>
+
+			</div>
+
+			)}
+			<div className="border-top px-4 py-3 m-0 ">
+				<span className="itm">{list.length > 1 ? list.length + " " + "Tasks left" : list.length + " " + "Task left"}</span>
+			</div>
 		</div>
-
-		)}
 
 	</>
 
