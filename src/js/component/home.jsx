@@ -56,6 +56,7 @@ const Home = () => {
 
 			if (response.ok) {
 				getTasks()
+				setTask("")
 
 			}
 		}
@@ -99,12 +100,14 @@ const Home = () => {
 
 	return <>
 
-		<div className="caja" style={{ width: "55%", margin: "auto" }}>
+		<div className="box" style={{ width: "55%", margin: "auto" }}>
 			<form className="d-flex justify-content-center mt-2" onSubmit={(evt) => { evt.preventDefault() }}>
 
 				<input placeholder="Write a Task" className="border border-0 caja py-3 px-3" type="text"
 					onKeyUp={handleSubmit}
+					value={task}
 					onChange={(e) => setTask(e.target.value)}
+
 				/>
 				<button
 					onClick={() => deleteAll()}
@@ -112,10 +115,11 @@ const Home = () => {
 
 			</form>
 
-			{list && list.map((task, index) => <div className="d-flex justify-content-between border-top gap-2 m-3" key={index}>
-				<div className="d-flex mt-4 align-content-center">
+			{list && list.map((task, index) => <div className="caja d-flex justify-content-between border-top gap-2 m-3" key={index}>
+				<div className="d-flex mt-4 align-content-center caja ">
 					<h5 className=""> {task.label} </h5></div>
-				<button className="bg-danger btn d-flex align-items-center m-3 anm borde" onClick={() => deleteItems(task.label)}>🗑️</button>
+				<div className="delete">
+					<button className="bg-danger btn d-flex align-items-center m-3 borde anm delete" onClick={() => deleteItems(task.label)}>🗑️</button></div>
 
 			</div>
 

@@ -1,4 +1,4 @@
-.caja {
+.box {
     background-color: rgb(249, 249, 249);
   }
   
@@ -43,11 +43,21 @@
   .delete {
     display: none;
   }
-  .caja:hover > .margen > .delete {
+  .caja:hover > .delete {
     display: block;
     transition: all 2s ease-in-out;
+  }
+  .caja > .delete {
+    display: none ;
+    
   }
     .borde{
         border: none;
         border-radius: none;
     }  
+  
+    .del {
+      text-decoration: none;
+    }
+
+    
