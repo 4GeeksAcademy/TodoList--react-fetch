@@ -53,7 +53,6 @@ const Home = () => {
 				}
 			})
 
-
 			if (response.ok) {
 				getTasks()
 				setTask("")
@@ -68,8 +67,9 @@ const Home = () => {
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json' }
 		});
-
-		createUser()
+		if (response.ok) {
+			createUser()
+		}
 	};
 
 	const deleteItems = async (label) => {
@@ -100,7 +100,7 @@ const Home = () => {
 
 	return <>
 
-		<div className="box" style={{ width: "55%", margin: "auto" }}>
+		<div className="box" style={{ width: "55%", margin: "auto", maxHeight: "auto" }}>
 			<form className="d-flex justify-content-center mt-2" onSubmit={(evt) => { evt.preventDefault() }}>
 
 				<input placeholder="Write a Task" className="border border-0 caja py-3 px-3" type="text"
@@ -109,15 +109,17 @@ const Home = () => {
 					onChange={(e) => setTask(e.target.value)}
 
 				/>
-				<button
-					onClick={() => deleteAll()}
-					className="btn btn-secondary mx-3">Delete All</button>
+
 
 			</form>
+			<button
+				onClick={() => deleteAll()}
+				className="btn btn-secondary mx-3">Delete All</button>
+
 
 			{list && list.map((task, index) => <div className="caja d-flex justify-content-between border-top gap-2 m-3" key={index}>
 				<div className="d-flex mt-4 align-content-center caja ">
-					<h5 className=""> {task.label} </h5></div>
+					<h5 className="">{task.label}</h5></div>
 				<div className="delete">
 					<button className="bg-danger btn d-flex align-items-center m-3 borde anm delete" onClick={() => deleteItems(task.label)}>🗑️</button></div>
 
@@ -125,7 +127,7 @@ const Home = () => {
 
 			)}
 			<div className="border-top px-4 py-3 m-0 ">
-				<span className="itm">{list.length > 1 ? list.length + " " + "Tasks left" : list.length + " " + "Task left"}</span>
+
 			</div>
 		</div>
 
